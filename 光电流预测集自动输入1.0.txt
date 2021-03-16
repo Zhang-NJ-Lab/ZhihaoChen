@@ -1,0 +1,79 @@
+import csv
+
+def C( temp , flag ):     #输入第三个输入数据
+
+    for i in range( 40 , 1200 , 20):   #循环
+
+        if (flag == 0 and i != 40 and i != 120 and i!=200 and i!=320 and i != 400): #排除原先的已有条件
+
+            temp[lens-2] = i
+
+            csv_write.writerow(temp)   #写入已经做好的暂存行
+
+        else:
+
+            continue
+
+    return
+
+def B(temp): #处理第二个输入数据
+
+    feet = 0.6
+
+    for i in range(12):
+
+        temp[lens-3] = round(feet,2)
+
+        if (feet == 1 or feet == 1.2 or feet == 0.83):
+
+            C( temp , 1 )   #标1做标志代表这里有重复项
+
+        else:
+
+            C( temp , 0 )
+
+        feet = feet + 0.05
+
+    return
+
+def A(temp):  #处理第一个输入数据
+
+    for i in range(1,4):
+
+        temp[lens-4] = i
+
+        B(temp)
+
+filename = '光电流数据yingwen.csv'
+
+#写入名字
+
+with open(filename) as f:  #打开csv文件，并拷贝
+
+    reader = csv.reader(f)
+
+    copy = list(reader)
+
+path = "result.csv"  #目标输出文件
+
+with open(path,'w',newline="") as f:
+
+    csv_write = csv.writer(f)
+
+    temp = copy[0]
+
+    lens = len(temp)
+
+    del(temp[lens-1])
+
+    csv_write.writerow(temp)   #初始化，删去输出数据的行
+
+    for i in range(6):
+
+        temp = copy[1 + i * 45]
+
+        lens = len(temp)
+
+        del(temp[lens-1])
+
+        A(temp)   #排列输入
